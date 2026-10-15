@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bestie da Lu · vitrine</title>
+<meta name="description" content="eu encontro. eu filtro. você escolhe. A vitrine da Lu, com link.">
+<meta property="og:title" content="Bestie da Lu">
+<meta property="og:description" content="eu encontro. eu filtro. você escolhe.">
+<meta name="theme-color" content="#faf6f2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@400;500&display=swap">
+<style>
+  :root{
+    --surface:#faf6f2; --raised:#ffffff; --line:#e6dbd2;
+    --ink:#2b1f19; --muted:#75655b;
+    --marrom:#5c3b2a; --deep:#3a261c; --on:#f6eee7;
+    --nude:#e9d8ca; --caramelo:#a97c56; --caramelo-ink:#7a5536;
+    --display:"Bodoni Moda", Didot, "Bodoni 72", Georgia, serif;
+    --sans:Jost, Futura, "Century Gothic", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.45}
+  a{color:inherit}
+  .wrap{max-width:430px;margin:0 auto;padding:40px max(18px,env(safe-area-inset-right)) 48px max(18px,env(safe-area-inset-left))}
+
+  /* topo */
+  header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+  .avatar{width:88px;height:88px;border-radius:50%;background:var(--deep);position:relative;display:grid;place-items:center}
+  .avatar::before{content:"";position:absolute;inset:8px;border:1px solid var(--caramelo);border-radius:50%}
+  .avatar span{font-family:var(--display);font-size:42px;line-height:1;color:var(--on);letter-spacing:-.06em}
+  .avatar b{position:absolute;top:20px;right:22px;color:#d4ab85;font-weight:400;font-size:11px}
+  .logo{font-family:var(--display);font-size:44px;line-height:.9;color:var(--deep);margin:4px 0 0}
+  .logo i{color:var(--marrom)}
+  .sig{font-family:var(--display);font-style:italic;font-size:17px;color:var(--marrom);margin:0}
+  .selos-legenda{font-size:13px;color:var(--muted);margin:0}
+  .redes{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+  .redes a{font-size:13px;text-decoration:none;border:1px solid var(--line);background:var(--raised);border-radius:999px;padding:8px 14px}
+  .redes a:hover{border-color:var(--caramelo)}
+
+  /* filtros */
+  .filtros{display:flex;gap:8px;overflow-x:auto;padding:28px 2px 6px;scrollbar-width:none}
+  .filtros::-webkit-scrollbar{display:none}
+  .destaques{margin-top:24px;display:flex;flex-direction:column;gap:6px}
+  .codigo{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--nude);border-radius:12px;padding:5px 5px 5px 14px;color:var(--deep);text-decoration:none}
+  .codigo[hidden]{display:none}
+  .codigo-label{font-family:var(--display);font-style:italic;font-size:16px;line-height:1.2;color:var(--deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .codigo-btn{flex:none;display:flex;align-items:center;gap:8px;font:inherit;background:var(--deep);color:var(--on);border:0;border-radius:999px;padding:0 12px;height:32px;cursor:pointer}
+  .codigo-valor{font-size:13px;font-weight:500;letter-spacing:.12em}
+  .codigo-acao{font-size:10px;letter-spacing:.1em;opacity:.8;text-transform:uppercase}
+  .codigo-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:1.6}
+  .codigo-btn:focus-visible,a.codigo:focus-visible{outline:2px solid var(--caramelo);outline-offset:2px}
+  .filtros button{flex:none;font:inherit;font-size:13px;letter-spacing:.06em;color:var(--marrom);background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;min-height:40px}
+  .filtros button[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:var(--on)}
+  .filtros button:focus-visible,.card:focus-visible,.redes a:focus-visible{outline:2px solid var(--caramelo);outline-offset:2px}
+
+  /* seções */
+  section{margin-top:30px;scroll-margin-top:16px}
+  .kicker{display:none;font-size:11px;letter-spacing:.3em;font-weight:500;color:var(--caramelo-ink);text-transform:uppercase;margin:0 0 6px}
+  h2{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.05;color:var(--deep);margin:0 0 4px;text-wrap:balance}
+  .sub{font-size:14px;color:var(--muted);margin:0 0 14px}
+  .video{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--marrom);text-decoration:none;border:1px solid var(--marrom);border-radius:999px;padding:9px 18px;margin:2px 0 16px}
+  .video svg{width:10px;height:10px;fill:currentColor}
+
+  /* cartões */
+  .lista{display:flex;flex-direction:column;gap:12px}
+  .card{display:grid;grid-template-columns:84px minmax(0,1fr) 40px;gap:14px;align-items:center;background:var(--raised);border:1px solid var(--line);border-radius:18px;padding:12px;text-decoration:none;transition:border-color .15s}
+  .card:hover{border-color:var(--caramelo)}
+  .thumb{width:84px;height:84px;border-radius:12px;background:var(--nude);overflow:hidden;display:grid;place-items:center;font-family:var(--display);font-style:italic;font-size:30px;color:var(--marrom)}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .meta{min-width:0;display:flex;flex-direction:column;gap:3px}
+  .linha1{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .loja{font-size:11px;letter-spacing:.2em;font-weight:500;color:var(--muted);text-transform:uppercase}
+  .selo{font-size:10px;letter-spacing:.14em;font-weight:500;text-transform:uppercase;border-radius:999px;padding:3px 9px;white-space:nowrap}
+  .selo.t{background:var(--deep);color:var(--on)}
+  .selo.s{border:1px solid var(--line);color:var(--caramelo-ink)}
+  .selo.c{background:var(--nude);color:var(--caramelo-ink);border:1px solid var(--caramelo)}
+  .selo.s b{color:var(--caramelo);font-weight:400}
+  .nome{font-family:var(--display);font-size:19px;line-height:1.15;color:var(--ink)}
+  .det{font-size:13px;color:var(--muted)}
+  .preco{font-size:15px;font-weight:500;color:var(--marrom)}
+  .seta{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--marrom)}
+  .seta svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6}
+  .vipor{font-size:12px;color:var(--muted)}
+  .breve{font-size:11px;letter-spacing:.08em;color:var(--muted);white-space:nowrap}
+  .vazio{font-size:14px;color:var(--muted);text-align:center;padding:20px 0}
+
+  footer{margin-top:44px;text-align:center;font-size:12px;line-height:1.5;color:var(--muted)}
+  footer .mini{font-family:var(--display);font-size:22px;line-height:.9;color:var(--deep);margin-bottom:10px}
+  footer .mini i{color:var(--marrom)}
+  footer p{margin:0}
+  footer .aviso-preco{font-size:13px;line-height:1.55;color:var(--marrom)}
+  footer .aviso-afiliado{font-size:10px;margin-top:10px;letter-spacing:.02em}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="avatar" aria-hidden="true"><span>b<i>l</i></span><b>✦</b></div>
+    <h1 class="logo">bestie<br><i>da lu</i></h1>
+    <p class="sig">eu encontro. eu filtro. você escolhe.</p>
+    <p class="selos-legenda">♡ testado: eu uso e aprovo · ✦ selecionado: passou no meu filtro</p>
+    <nav class="redes" aria-label="Redes">
+      <a href="https://www.instagram.com/bestiedalu/" target="_blank" rel="noopener">@bestiedalu</a>
+      <a href="https://www.instagram.com/luisalauraa/" target="_blank" rel="noopener">@luisalauraa</a>
+    </nav>
+  </header>
+
+  <div class="destaques">
+    <div class="codigo" id="codigo" hidden>
+      <span class="codigo-label">minhas escolhas na Shein</span>
+      <button type="button" class="codigo-btn" id="codigoBtn" aria-label="Copiar código para digitar na busca da Shein">
+        <span class="codigo-valor" id="codigoValor"></span>
+        <span class="codigo-acao" id="codigoAcao">copiar</span>
+      </button>
+    </div>
+    <div id="cupons" style="display:contents"></div>
+  </div>
+
+  <div class="filtros" role="toolbar" aria-label="Filtrar por categoria" id="filtros"></div>
+
+  <main id="conteudo"></main>
+
+  <footer>
+    <div class="mini">bestie<br><i>da lu</i></div>
+    <p class="aviso-preco">Os preços são os que eu vi na loja e podem mudar com cupons, frete e estoque.<br>O valor final aparece no site da loja.</p>
+    <p class="aviso-afiliado">Links de afiliado 🤍</p>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   VITRINE BESTIE DA LU
+   Os produtos vêm da planilha do Google (aba "produtos").
+   Cole abaixo o link CSV de "Publicar na web" da planilha.
+   ========================================================= */
+/* código de pesquisa da Shein (deixe "" para esconder o quadro) */
+const CODIGO_SHEIN = "Z4NNW";
+const CUPONS = [];
+
+const PLANILHA_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQAeTh3LRUcGaw6EFBbou5bh5zW6pFWI8JvDf-y3tqJ9rBVnI_vXmdlLcMouBijk3PzOYMqmhYwUTkl/pub?gid=717065008&single=true&output=csv";
+
+// os botões de filtro saem da coluna Categoria da planilha, na ordem em que aparecem
+const seta = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6"/></svg>';
+const play = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg>';
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s => String(s ?? "").trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const slug = s => norm(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "secao";
+const seguro = u => /^https?:\/\//i.test(String(u ?? "").trim()) ? String(u).trim() : "";
+
+function parseCSV(t){
+  const rows=[]; let row=[], f="", q=false;
+  for (let i=0;i<t.length;i++){
+    const c=t[i];
+    if (q){ if (c=='"'){ if (t[i+1]=='"'){ f+='"'; i++; } else q=false; } else f+=c; }
+    else if (c=='"') q=true;
+    else if (c==','){ row.push(f); f=""; }
+    else if (c=='\n'){ row.push(f); rows.push(row); row=[]; f=""; }
+    else if (c!='\r') f+=c;
+  }
+  if (f!=="" || row.length){ row.push(f); rows.push(row); }
+  return rows;
+}
+
+function montarSecoes(rows){
+  // aceita os nomes antigos e os nomes amigáveis das colunas (sem ligar para acento, maiúscula, espaço ou "?")
+  const chave = s => norm(s).replace(/[^a-z0-9]/g, "");
+  const APELIDOS = {
+    secao: ["secao", "colecao", "lista", "tema", "grupo"],
+    subtitulo_secao: ["subtitulosecao", "frasedasecao", "frasedacolecao", "frasedalista", "frasedotema", "frasedogrupo", "frase"],
+    video_secao: ["videosecao", "linkdoreel"],
+    nome: ["nome", "produto", "nomedoproduto"],
+    loja: ["loja"], detalhe: ["detalhe"], preco: ["preco"], selo: ["selo"], categoria: ["categoria"],
+    foto: ["foto", "linkdafoto"],
+    link: ["link", "linkafiliadodoproduto", "linkdeafiliado", "linkafiliado"],
+    mostrar: ["mostrar"]
+  };
+  const head = rows[0].map(chave);
+  const idx = k => { for (const a of (APELIDOS[k] || [chave(k)])) { const i = head.indexOf(a); if (i >= 0) return i; } return -1; };
+  const get = (r,k) => { const i=idx(k); return i<0 ? "" : String(r[i] ?? "").trim(); };
+  // linha rápida: uma célula com os dados separados por "|" (colada em qualquer coluna)
+  // Produto|Loja|Detalhe|Preço|Selo|Categoria|Link da Foto|Link afiliado  (com 9 partes, a 1ª é a Coleção)
+  const ORDEM = ["nome","loja","detalhe","preco","selo","categoria","foto","link"];
+  const expandir = r => {
+    const j = r.findIndex(c => (String(c ?? "").match(/\|/g) || []).length >= 5);
+    if (j < 0) return r;
+    let partes = String(r[j]).split("|").map(x => x.trim());
+    // link de reel/post do Instagram em qualquer posição vira o "Assistir ao vídeo" da coleção
+    const reel = partes.find(x => /instagram\.com\/(reel|reels|p)\//i.test(x));
+    if (reel) partes = partes.filter(x => x !== reel);
+    while (partes.length && partes[partes.length - 1] === "") partes.pop();
+    const novo = r.slice(); while (novo.length < head.length) novo.push("");
+    novo[j] = "";
+    const campos = partes.length >= 9 ? ["secao", ...ORDEM] : ORDEM;
+    if (reel && idx("video_secao") >= 0) novo[idx("video_secao")] = reel;
+    campos.forEach((k, n) => { const i = idx(k); if (i >= 0 && partes[n] !== undefined && partes[n] !== "") novo[i] = partes[n]; });
+    return novo;
+  };
+  const secoes = []; const mapa = {}; let ultimaColecao = "";
+  CUPONS.length = 0;
+  for (const r of rows.slice(1).map(expandir)){
+    const nome = get(r,"nome"); if (!nome) continue;
+    if (norm(get(r,"mostrar")) === "nao") continue;
+    // selo cupom = vira um destaque fino no topo, abaixo do código
+    if (["cupom","destaque"].includes(norm(get(r,"selo")))) { CUPONS.push({ titulo: nome, link: seguro(get(r,"link")) }); continue; }
+    // coleção vazia = mesma da linha de cima; maiúsculas/acentos não separam coleções
+    const titulo = get(r,"secao") || ultimaColecao || "achados";
+    ultimaColecao = titulo;
+    const k = slug(titulo);
+    let s = mapa[k];
+    if (!s){ s = mapa[k] = { id: k, titulo, sub: "", video: "", produtos: [] }; secoes.push(s); }
+    if (!s.sub) s.sub = get(r,"subtitulo_secao");
+    if (!s.video) s.video = seguro(get(r,"video_secao"));
+    s.produtos.push({
+      nome, loja: get(r,"loja"), detalhe: get(r,"detalhe"), preco: (v => { v = v.replace(/^(vi por|a partir de)\s*/i, ""); return /^\d/.test(v) ? "R$ " + v : v; })(get(r,"preco")),
+      selo: (v => v === "selecionado" || v === "cupom" ? v : "testado")(norm(get(r,"selo"))),
+      categoria: norm(get(r,"categoria")), catNome: get(r,"categoria").toLowerCase(), foto: seguro(get(r,"foto")), link: seguro(get(r,"link"))
+    });
+  }
+  return secoes;
+}
+
+function cartao(p){
+  const selo = p.selo === "testado" ? '<span class="selo t">♡ testado</span>' : p.selo === "cupom" ? '<span class="selo c">cupom</span>' : '<span class="selo s"><b>✦</b> selecionado</span>';
+  const thumb = p.foto ? `<img src="${esc(p.foto)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : esc(p.nome.trim()[0].toLowerCase());
+  const det = [p.detalhe ? esc(p.detalhe) : "", p.preco ? `<span class="vipor">vi por</span> <span class="preco">${esc(p.preco)}</span>` : ""].filter(Boolean).join(" · ");
+  const tag = p.link ? "a" : "div";
+  const attrs = p.link ? `href="${esc(p.link)}" target="_blank" rel="noopener sponsored"` : 'aria-disabled="true"';
+  return `<${tag} class="card" ${attrs}>
+    <div class="thumb">${thumb}</div>
+    <div class="meta">
+      <div class="linha1">${p.loja ? `<span class="loja">${esc(p.loja)}</span>` : ""}${selo}</div>
+      <div class="nome">${esc(p.nome)}</div>
+      ${det ? `<div class="det">${det}</div>` : ""}
+    </div>
+    ${p.link ? `<div class="seta">${seta}</div>` : `<div class="breve">em breve</div>`}
+  </${tag}>`;
+}
+
+let SECOES = [];
+function render(filtro){
+  const html = SECOES.map((s, i) => {
+    const itens = s.produtos.filter(p => filtro === "tudo" || p.categoria === filtro || (filtro === "testado" && p.selo === "testado"));
+    if (!itens.length) return "";
+    return `<section id="${esc(s.id)}">
+      <h2>${esc(s.titulo)}</h2>
+      ${s.sub ? `<p class="sub">${esc(s.sub)}</p>` : ""}
+      ${s.video ? `<a class="video" href="${esc(s.video)}" target="_blank" rel="noopener">${play} Assistir ao vídeo</a>` : ""}
+      <div class="lista">${itens.map(cartao).join("")}</div>
+    </section>`;
+  }).join("");
+  document.getElementById("conteudo").innerHTML = html || '<p class="vazio">Nada por aqui ainda. Em breve! 🤍</p>';
+}
+
+const barra = document.getElementById("filtros");
+function montarFiltros(){
+  const vistos = new Map();
+  SECOES.forEach(s => s.produtos.forEach(p => { if (p.categoria && !vistos.has(p.categoria)) vistos.set(p.categoria, p.catNome); }));
+  const temTestado = SECOES.some(s => s.produtos.some(p => p.selo === "testado"));
+  const lista = [["tudo","tudo"], ...vistos.entries(), ...(temTestado ? [["testado","♡ testados"]] : [])];
+  barra.innerHTML = lista.map(([v,t],i)=>`<button type="button" data-f="${esc(v)}" aria-pressed="${i===0}">${esc(t)}</button>`).join("");
+  barra.hidden = lista.length < 3;
+}
+barra.addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  barra.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x===b));
+  render(b.dataset.f);
+});
+
+async function carregar(){
+  const alvo = document.getElementById("conteudo");
+  alvo.innerHTML = '<p class="vazio">Carregando a vitrine…</p>';
+  try {
+    if (!/^https?:\/\//.test(PLANILHA_CSV)) throw new Error("sem planilha");
+    const url = PLANILHA_CSV + (PLANILHA_CSV.includes("?") ? "&" : "?") + "t=" + Date.now();
+    const r = await fetch(url, { cache: "no-store" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    SECOES = montarSecoes(parseCSV(await r.text()));
+    montarFiltros();
+    document.getElementById("cupons").innerHTML = CUPONS.filter(c => c.link).map(c =>
+      `<a class="codigo" href="${esc(c.link)}" target="_blank" rel="noopener sponsored"><span class="codigo-label">${esc(c.titulo)}</span><span class="codigo-btn"><span class="codigo-acao">ver</span>${seta}</span></a>`).join("");
+    render("tudo");
+    if (location.hash){ const el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView(); }
+  } catch (e) {
+    alvo.innerHTML = '<p class="vazio">Não consegui carregar os achados agora. Tente de novo em instantes. 🤍</p>';
+  }
+}
+carregar();
+
+if (CODIGO_SHEIN) {
+  document.getElementById("codigoValor").textContent = CODIGO_SHEIN;
+  document.getElementById("codigo").hidden = false;
+  const acao = document.getElementById("codigoAcao");
+  document.getElementById("codigoBtn").addEventListener("click", async () => {
+    let ok = false;
+    try { await navigator.clipboard.writeText(CODIGO_SHEIN); ok = true; } catch (e) {
+      try { const t = document.createElement("textarea"); t.value = CODIGO_SHEIN; t.style.position = "fixed"; t.style.opacity = "0";
+            document.body.appendChild(t); t.select(); ok = document.execCommand("copy"); t.remove(); } catch (e2) {}
+    }
+    acao.textContent = ok ? "copiado!" : "segure p/ copiar";
+    setTimeout(() => acao.textContent = "copiar", 2200);
+  });
+}
+</script>
+</body>
+</html>
