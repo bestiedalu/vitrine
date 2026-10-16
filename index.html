@@ -87,6 +87,9 @@
   .breve{font-size:11px;letter-spacing:.08em;color:var(--muted);white-space:nowrap}
   .vazio{font-size:14px;color:var(--muted);text-align:center;padding:20px 0}
 
+  .mais{margin-top:40px;display:flex;flex-direction:column;gap:6px}
+  .mais[hidden]{display:none}
+  .mais-t{font-family:var(--display);font-style:italic;font-size:22px;color:var(--deep);margin-bottom:6px}
   footer{margin-top:44px;text-align:center;font-size:12px;line-height:1.5;color:var(--muted)}
   footer .mini{font-family:var(--display);font-size:22px;line-height:.9;color:var(--deep);margin-bottom:10px}
   footer .mini i{color:var(--marrom)}
@@ -125,6 +128,11 @@
 
   <main id="conteudo"></main>
 
+  <section class="mais" id="mais" hidden>
+    <div class="mais-t">quer ver mais?</div>
+    <div id="maisLinks" style="display:contents"></div>
+  </section>
+
   <footer>
     <div class="mini">bestie<br><i>da lu</i></div>
     <p class="aviso-preco">Os preços são os que eu vi na loja e podem mudar com cupons, frete e estoque.<br>O valor final aparece no site da loja.</p>
@@ -140,7 +148,8 @@
    ========================================================= */
 /* código de pesquisa da Shein (deixe "" para esconder o quadro) */
 const CODIGO_SHEIN = "Z4NNW";
-/* link direto da lista "minhas escolhas" da Lu na Shein (se tiver, a faixa abre a lista em vez de copiar o código) */
+/* link direto da lista "minhas escolhas" da Lu na Shein: aparece no fim da vitrine, em "quer ver mais?".
+   Faixas da planilha (selo cupom) cujo título começa com "minhas escolhas" também vão para o fim. */
 const LINK_SHEIN = "https://br.shein.com/ark/5231?url_from=affiliate_koc_4496248285&ad_type=KOC&koc_id=4496248285&picks_delivery_id=5468015&campaign=picklist&landing_page_id=5231&language=pt-br&siteuid=br";
 const CUPONS = [];
 
@@ -283,8 +292,13 @@ async function carregar(){
     if (!r.ok) throw new Error("HTTP " + r.status);
     SECOES = montarSecoes(parseCSV(await r.text()));
     montarFiltros();
-    document.getElementById("cupons").innerHTML = CUPONS.filter(c => c.link).map(c =>
-      `<a class="codigo" href="${esc(c.link)}" target="_blank" rel="noopener sponsored"><span class="codigo-label">${esc(c.titulo)}</span><span class="codigo-btn"><span class="codigo-acao">ver</span>${seta}</span></a>`).join("");
+    const faixa = c => `<a class="codigo" href="${esc(c.link)}" target="_blank" rel="noopener sponsored"><span class="codigo-label">${esc(c.titulo)}</span><span class="codigo-btn"><span class="codigo-acao">ver</span>${seta}</span></a>`;
+    const ehLista = c => /^minhas escolhas/i.test(c.titulo.trim());
+    const comLink = CUPONS.filter(c => c.link);
+    document.getElementById("cupons").innerHTML = comLink.filter(c => !ehLista(c)).map(faixa).join("");
+    const listas = (LINK_SHEIN ? [{ titulo: "minhas escolhas na Shein", link: LINK_SHEIN }] : []).concat(comLink.filter(ehLista));
+    document.getElementById("maisLinks").innerHTML = listas.map(faixa).join("");
+    document.getElementById("mais").hidden = !listas.length;
     render("tudo");
     if (location.hash){ const el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView(); }
   } catch (e) {
@@ -294,11 +308,7 @@ async function carregar(){
 carregar();
 
 if (LINK_SHEIN) {
-  const box = document.getElementById("codigo");
-  const a = document.createElement("a");
-  a.className = "codigo"; a.id = "codigo"; a.href = LINK_SHEIN; a.target = "_blank"; a.rel = "noopener sponsored";
-  a.innerHTML = '<span class="codigo-label">minhas escolhas na Shein</span><span class="codigo-btn"><span class="codigo-acao">ver</span>' + seta + '</span>';
-  box.replaceWith(a);
+  /* a lista da Shein aparece no fim da vitrine ("quer ver mais?") */
 } else if (CODIGO_SHEIN) {
   document.getElementById("codigoValor").textContent = CODIGO_SHEIN;
   document.getElementById("codigo").hidden = false;
