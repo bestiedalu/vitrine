@@ -219,7 +219,7 @@ function montarSecoes(rows){
     // selo cupom = vira um destaque fino no topo, abaixo do código
     if (["cupom","destaque"].includes(norm(get(r,"selo")))) { CUPONS.push({ titulo: nome, link: seguro(get(r,"link")) }); continue; }
     // coleção vazia = mesma da linha de cima; maiúsculas/acentos não separam coleções
-    const titulo = get(r,"secao") || ultimaColecao || "achados";
+    const titulo = get(r,"secao") || ultimaColecao || "escolhas";
     ultimaColecao = titulo;
     const k = slug(titulo);
     let s = mapa[k];
@@ -302,7 +302,7 @@ async function carregar(){
     render("tudo");
     if (location.hash){ const el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView(); }
   } catch (e) {
-    alvo.innerHTML = '<p class="vazio">Não consegui carregar os achados agora. Tente de novo em instantes. 🤍</p>';
+    alvo.innerHTML = '<p class="vazio">Não consegui carregar as escolhas agora. Tente de novo em instantes. 🤍</p>';
   }
 }
 carregar();
