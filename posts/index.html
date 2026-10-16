@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Postagens · bestie da lu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
+<style>
+:root{--e:#3A261C;--m:#5C3B2A;--n:#E9D8CA;--f:#FAF6F2;--c:#A97C56;--cl:#F6EEE7}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--f);color:var(--e);font-family:Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:430px;margin:0 auto;padding:40px 16px 80px}
+header{text-align:center;margin-bottom:28px}
+.logo{font-family:"Bodoni Moda",serif;font-size:44px;line-height:.9}
+.logo i{color:var(--m)}
+header p{margin-top:14px;font-size:12px;letter-spacing:.2em;color:var(--c);text-transform:uppercase}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;scrollbar-width:none;position:sticky;top:0;background:var(--f);z-index:2}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;padding:10px 18px;border-radius:999px;border:1.5px solid var(--n);font-size:14px;letter-spacing:.04em;color:var(--m);text-decoration:none;white-space:nowrap}
+.tabs a.on{background:var(--e);border-color:var(--e);color:var(--cl)}
+.post{background:#fff;border:1.5px solid var(--n);border-radius:24px;padding:22px 18px;margin-bottom:22px;scroll-margin-top:70px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.num{font-size:12px;letter-spacing:.2em;color:var(--c);text-transform:uppercase}
+.st{font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:var(--n);color:var(--m);white-space:nowrap}
+.st.ok{background:var(--e);color:var(--cl)}
+h2{margin-top:10px;font-family:"Bodoni Moda",serif;font-weight:400;font-size:32px;line-height:1.05}
+h2 i{color:var(--m)}
+.sec{margin-top:22px;font-size:11px;letter-spacing:.2em;color:var(--c);text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.sec::after{content:"";flex:1;height:1px;background:var(--n)}
+.strip{margin-top:12px;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+.strip figure{flex:none;width:72%;scroll-snap-align:start}
+.strip img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;display:block;border:1px solid var(--n);background:var(--n)}
+.strip figcaption{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;color:var(--m)}
+.strip figcaption a{color:var(--e);font-weight:500;text-decoration:none;border-bottom:1px solid var(--c)}
+.btn{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:999px;border:0;background:var(--e);color:var(--cl);font:500 16px Jost,sans-serif;letter-spacing:.04em;cursor:pointer}
+.btn.lt{background:var(--n);color:var(--e)}
+.btn:active{transform:scale(.98)}
+.hint{margin-top:8px;font-size:12px;line-height:1.45;color:var(--c);text-align:center}
+.cap{margin-top:12px;white-space:pre-wrap;font-size:15px;line-height:1.55;background:var(--f);border-radius:16px;padding:16px;color:var(--e)}
+ol,ul{margin-top:12px;padding-left:20px;font-size:15px;line-height:1.55;color:var(--e)}
+li{margin-bottom:6px}
+li b{font-weight:500}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);opacity:0;transition:.25s;background:var(--e);color:var(--cl);padding:12px 20px;border-radius:999px;font-size:14px;z-index:9}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{text-align:center;font-family:"Bodoni Moda",serif;font-style:italic;color:var(--m);margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">bestie<br><i>da lu</i></div>
+    <p>postagens · bastidores</p>
+  </header>
+  <nav class="tabs" id="tabs"></nav>
+  <main id="posts"></main>
+  <footer>eu encontro. eu filtro. você escolhe.</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== CONTEÚDO DOS POSTS (Claude atualiza aqui) =====
+const POSTS = [
+  {
+    id: "post1", n: "post 1", titulo: "prazer, <i>bestie da lu</i>", status: "aguardando aprovação",
+    telas: ["post1-tela1.png","post1-tela2.png","post1-tela3.png","post1-tela4.png"],
+    como: [
+      "Carrossel com as <b>4 telas</b>, na ordem 1 a 4.",
+      "Postar no <b>@bestiedalu</b>.",
+      "<b>Fixar no topo</b> do perfil.",
+      "É o <b>último</b> a ser postado (ordem: 6, 5, 4, 3, 2 e por fim o 1)."
+    ],
+    legenda: `prazer, bestie da lu 🤍
+
+aqui eu junto o que vale a pena: o que eu uso e o que passou pelo meu filtro. se eu não usaria, não vem pra cá.
+
+♡ testado · eu usei e aprovo, sempre com o tamanho que peguei
+✦ selecionado · não usei, mas tem nota alta, avaliações reais e loja confiável
+
+🔗 tudo na vitrine (link na bio)
+
+salva esse post pra lembrar dos selos ✨
+
+#achadinhos #achadinhosshein #achadinhosshopee #comprinhas`
+  },
+  {
+    id: "post2", n: "post 2", titulo: "viralizados <i>da lu</i>", status: "aguardando aprovação",
+    telas: ["post2-tela1.png","post2-tela2.png","post2-tela3.png","post2-tela4.png","post2-tela5.png","post2-tela6.png"],
+    como: [
+      "Carrossel com as <b>6 telas</b>, na ordem 1 a 6.",
+      "Postar no <b>@bestiedalu</b> (não é collab).",
+      "Marcar <b>@luisalauraa</b> na tela 1.",
+      "<b>Não fixar.</b>",
+      "É o <b>penúltimo</b> a ser postado.",
+      "Se quiser, coloque uma frase sua sobre cada peça na legenda. A verdade é o que vende!"
+    ],
+    legenda: `viralizados da lu 🤍
+os pijamas que vocês mais pediram, com o tamanho que eu peguei.
+
+♡ testado · robe · Peguei o P · vi por R$ 176,69
+♡ testado · short doll · Peguei o P · vi por R$ 147,24
+♡ testado · camisola longa de cetim · Peguei o P · vi por R$ 118,58
+♡ testado · pijama coração · Peguei o P · vi por R$ 69,65
+
+preço da Shein muda com cupom, confere na hora 😉
+🔗 tudo na vitrine (link na bio)
+
+#pijama #pijamashein #achadinhosshein #achadinhos`
+  },
+  {
+    id: "post3", n: "post 3", titulo: "reel do robe <i>em collab</i>", status: "fazer quando puder",
+    telas: [],
+    intro: "Não precisa repostar nem baixar nada: é só transformar o reel do robe (134 mil views) em collab. Assim ele aparece nos dois perfis.",
+    como: [
+      "No <b>@luisalauraa</b>: abra o reel do robe → 3 pontinhos → <b>Editar</b>.",
+      "<b>Marcar pessoas → Convidar colaborador</b> → procure <b>@bestiedalu</b> e envie.",
+      "No <b>@bestiedalu</b>: abra o direct e <b>aceite o convite</b>.",
+      "No perfil do @bestiedalu: abra o reel → 3 pontinhos → <b>Fixar no perfil</b>.",
+      "Não mexa na legenda do reel, para não atrapalhar o “comenta → link” do ManyChat.",
+      "Se “Convidar colaborador” não aparecer, transforme o @bestiedalu em conta profissional antes."
+    ],
+    legenda: ""
+  }
+];
+// =====================================================
+
+const $ = s => document.querySelector(s);
+const toast = t => { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2200); };
+
+function render(){
+  $("#tabs").innerHTML = POSTS.map((p,i) => `<a href="#${p.id}" class="${i?"":"on"}">${p.n}</a>`).join("");
+  $("#posts").innerHTML = POSTS.map(p => {
+    const telas = p.telas.length ? `
+      <div class="sec">telas · ${p.telas.length}</div>
+      <div class="strip">${p.telas.map((t,i) => `
+        <figure><img src="img/${t}" alt="tela ${i+1}" loading="lazy">
+        <figcaption><span>tela ${i+1}</span><a href="img/${t}" download="${t}">baixar</a></figcaption></figure>`).join("")}
+      </div>
+      <button class="btn" data-save="${p.id}">salvar as ${p.telas.length} telas na galeria</button>
+      <p class="hint">no celular abre o menu de compartilhar: toque em “Salvar imagens”.<br>as telas saem em qualidade máxima, sem compressão do WhatsApp.</p>` : "";
+    const leg = p.legenda ? `
+      <div class="sec">legenda</div>
+      <div class="cap">${p.legenda.replace(/</g,"&lt;")}</div>
+      <button class="btn lt" data-copy="${p.id}">copiar legenda</button>` : "";
+    return `<section class="post" id="${p.id}">
+      <div class="top"><span class="num">${p.n}</span><span class="st ${p.status==="pronto pra postar"?"ok":""}">${p.status}</span></div>
+      <h2>${p.titulo}</h2>
+      ${p.intro ? `<p class="cap">${p.intro}</p>` : ""}
+      ${telas}
+      ${leg}
+      <div class="sec">como postar</div>
+      <ol>${p.como.map(c => `<li>${c}</li>`).join("")}</ol>
+    </section>`;
+  }).join("");
+}
+render();
+
+document.addEventListener("click", async e => {
+  const c = e.target.closest("[data-copy]");
+  if (c) {
+    const p = POSTS.find(x => x.id === c.dataset.copy);
+    try { await navigator.clipboard.writeText(p.legenda); toast("legenda copiada 🤍"); }
+    catch { const r = document.createRange(); r.selectNodeContents(c.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("legenda selecionada: toque em copiar"); }
+    return;
+  }
+  const b = e.target.closest("[data-save]");
+  if (b) {
+    const p = POSTS.find(x => x.id === b.dataset.save);
+    const old = b.textContent; b.textContent = "preparando…";
+    try {
+      const files = await Promise.all(p.telas.map(async t => {
+        const r = await fetch("img/" + t); const bl = await r.blob();
+        return new File([bl], t, { type: bl.type || "image/png" });
+      }));
+      if (navigator.canShare && navigator.canShare({ files })) {
+        await navigator.share({ files });
+      } else {
+        files.forEach((f,i) => setTimeout(() => {
+          const a = document.createElement("a"); a.href = URL.createObjectURL(f); a.download = f.name; a.click();
+        }, i * 400));
+        toast("baixando as telas…");
+      }
+    } catch (err) { if (err && err.name !== "AbortError") toast("use o “baixar” de cada tela"); }
+    b.textContent = old;
+  }
+});
+
+const io = new IntersectionObserver(es => es.forEach(en => {
+  if (en.isIntersecting) document.querySelectorAll(".tabs a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id));
+}), { rootMargin: "-40% 0px -55% 0px" });
+document.querySelectorAll(".post").forEach(s => io.observe(s));
+</script>
+</body>
+</html>
