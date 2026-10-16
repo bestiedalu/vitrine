@@ -140,6 +140,8 @@
    ========================================================= */
 /* código de pesquisa da Shein (deixe "" para esconder o quadro) */
 const CODIGO_SHEIN = "Z4NNW";
+/* link direto da lista "minhas escolhas" da Lu na Shein (se tiver, a faixa abre a lista em vez de copiar o código) */
+const LINK_SHEIN = "https://br.shein.com/ark/5231?url_from=affiliate_koc_4496248285&ad_type=KOC&koc_id=4496248285&picks_delivery_id=5468015&campaign=picklist&landing_page_id=5231&language=pt-br&siteuid=br";
 const CUPONS = [];
 
 const PLANILHA_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQAeTh3LRUcGaw6EFBbou5bh5zW6pFWI8JvDf-y3tqJ9rBVnI_vXmdlLcMouBijk3PzOYMqmhYwUTkl/pub?gid=717065008&single=true&output=csv";
@@ -291,7 +293,13 @@ async function carregar(){
 }
 carregar();
 
-if (CODIGO_SHEIN) {
+if (LINK_SHEIN) {
+  const box = document.getElementById("codigo");
+  const a = document.createElement("a");
+  a.className = "codigo"; a.id = "codigo"; a.href = LINK_SHEIN; a.target = "_blank"; a.rel = "noopener sponsored";
+  a.innerHTML = '<span class="codigo-label">minhas escolhas na Shein</span><span class="codigo-btn"><span class="codigo-acao">ver</span>' + seta + '</span>';
+  box.replaceWith(a);
+} else if (CODIGO_SHEIN) {
   document.getElementById("codigoValor").textContent = CODIGO_SHEIN;
   document.getElementById("codigo").hidden = false;
   const acao = document.getElementById("codigoAcao");
