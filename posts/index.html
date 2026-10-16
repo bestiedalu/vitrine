@@ -176,6 +176,32 @@ const toast = t => { const el = $("#toast"); el.textContent = t; el.classList.ad
 let marcados = {};
 try { marcados = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch { marcados = {}; }
 const salvar = () => { try { localStorage.setItem(KEY, JSON.stringify(marcados)); } catch {} };
+
+// marcações compartilhadas: valem para qualquer pessoa, em qualquer celular
+let online = false;
+// o que foi marcado/desfeito sem conexão fica na fila e sobe depois
+const PEND = "bestie_pendentes";
+let pend = {}; try { pend = JSON.parse(localStorage.getItem(PEND) || "{}") || {}; } catch { pend = {}; }
+const salvarPend = () => { try { localStorage.setItem(PEND, JSON.stringify(pend)); } catch {} };
+async function post(id, data){
+  const r = await fetch("/api/postados", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id, data }) });
+  if (!r.ok) throw 0;
+  return r.json();
+}
+async function enviar(id, data){
+  try { marcados = await post(id, data); online = true; delete pend[id]; salvarPend(); salvar(); return true; }
+  catch { online = false; pend[id] = data; salvarPend(); return false; }
+}
+async function carregar(){
+  try {
+    const r = await fetch("/api/postados", { cache: "no-store" });
+    if (!r.ok) throw 0;
+    let srv = await r.json(); online = true;
+    for (const [k, v] of Object.entries(pend)) { srv = await post(k, v); delete pend[k]; }
+    salvarPend(); marcados = srv; salvar();
+  } catch { online = false; }
+  render();
+}
 const dataDe = p => p.postado || marcados[p.id] || "";
 const fila = () => POSTS.filter(p => !dataDe(p));
 const feitos = () => POSTS.filter(p => dataDe(p));
@@ -193,7 +219,7 @@ function render(){
 
   if (aba === "postados") {
     $("#view").innerHTML = `<section class="post feitos">
-      <div class="top"><span class="num">já postados</span></div>
+      <div class="top"><span class="num">já postados</span><span class="st ${online?"ok":""}">${online?"vale para todos":"só neste celular"}</span></div>
       ${ok.length ? ok.map(p => `<div class="item"><div><h3>${p.titulo}</h3><p>POSTADO EM ${fmt(dataDe(p))}</p></div>
         ${p.postado ? "" : `<button data-desfazer="${p.id}">desfazer</button>`}</div>`).join("")
         : `<div class="vazio"><b>nada ainda</b>quando marcar “já postei” em um post, ele aparece aqui.</div>`}
@@ -228,6 +254,8 @@ function render(){
   </section>`;
 }
 render();
+carregar();
+document.addEventListener("visibilitychange", () => { if (!document.hidden) carregar(); });
 
 // aviso de instalar: some quando já está instalado ou se ela fechar
 const instalado = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
@@ -242,7 +270,11 @@ document.addEventListener("click", async e => {
   if (t) { aba = t.dataset.aba; render(); scrollTo({ top: 0, behavior: "smooth" }); return; }
 
   const d = e.target.closest("[data-desfazer]");
-  if (d) { delete marcados[d.dataset.desfazer]; salvar(); toast("voltou para a fila"); render(); return; }
+  if (d) {
+    const id = d.dataset.desfazer; delete marcados[id]; salvar(); render();
+    toast(await enviar(id, null) ? "voltou para a fila" : "voltou para a fila só neste celular");
+    return;
+  }
 
   const c = e.target.closest("[data-copy]");
   if (c) {
@@ -278,10 +310,10 @@ document.addEventListener("change", e => {
   const c = e.target.closest("[data-postei]");
   if (!c || !c.checked) return;
   const id = c.dataset.postei;
-  setTimeout(() => {
-    marcados[id] = hoje(); salvar();
+  setTimeout(async () => {
+    const dia = hoje(); marcados[id] = dia; salvar();
     aba = ""; render(); scrollTo({ top: 0, behavior: "smooth" });
-    toast("foi para postados ✓");
+    toast(await enviar(id, dia) ? "foi para postados ✓" : "marcado só neste celular (sem conexão)");
   }, 450);
 });
 </script>
