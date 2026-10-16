@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Postagens · bestie da lu</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="img/icone-180.png">
+<link rel="icon" href="img/icone-192.png">
+<meta name="theme-color" content="#FAF6F2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="postagens">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
@@ -23,7 +31,8 @@ header p{margin-top:14px;font-size:12px;letter-spacing:.2em;color:var(--c);text-
 .tabs button.on{background:var(--e);border-color:var(--e);color:var(--cl)}
 .tabs button.feito{border-style:dashed}
 .post{background:#fff;border:1.5px solid var(--n);border-radius:24px;padding:22px 18px;margin-bottom:22px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 10px}
+.num{white-space:nowrap}
 .num{font-size:12px;letter-spacing:.2em;color:var(--c);text-transform:uppercase}
 .st{font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:var(--n);color:var(--m);white-space:nowrap}
 .st.ok{background:var(--e);color:var(--cl)}
@@ -62,6 +71,11 @@ li b{font-weight:500}
 .vazio b{display:block;font-family:"Bodoni Moda",serif;font-weight:400;font-size:28px;color:var(--e);margin-bottom:8px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);opacity:0;transition:.25s;background:var(--e);color:var(--cl);padding:12px 20px;border-radius:999px;font-size:14px;z-index:9;white-space:nowrap}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.instalar{display:none;position:relative;background:#fff;border:1.5px solid var(--n);border-radius:20px;padding:16px 44px 16px 16px;margin-bottom:18px;font-size:14px;line-height:1.5;color:var(--e)}
+.instalar.on{display:block}
+.instalar b{font-weight:500}
+.instalar .t{display:block;font-family:"Bodoni Moda",serif;font-size:20px;margin-bottom:6px}
+.instalar .x{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;border:0;background:var(--f);color:var(--m);font-size:18px;cursor:pointer}
 footer{text-align:center;font-family:"Bodoni Moda",serif;font-style:italic;color:var(--m);margin-top:30px}
 </style>
 </head>
@@ -71,6 +85,13 @@ footer{text-align:center;font-family:"Bodoni Moda",serif;font-style:italic;color
     <div class="logo">bestie<br><i>da lu</i></div>
     <p>postagens · bastidores</p>
   </header>
+  <div class="instalar" id="instalar">
+    <span class="t">instale como app ♡</span>
+    Assim o que você marca como postado nunca se perde.<br>
+    <b>iPhone:</b> no Safari, toque em Compartilhar <b>⬆︎</b> → <b>Adicionar à Tela de Início</b>.<br>
+    <b>Android:</b> no Chrome, toque em <b>⋮</b> → <b>Adicionar à tela inicial</b>.
+    <button class="x" id="fechar" aria-label="fechar">×</button>
+  </div>
   <nav class="tabs" id="tabs"></nav>
   <main id="view"></main>
   <footer>eu encontro. eu filtro. você escolhe.</footer>
@@ -207,6 +228,14 @@ function render(){
   </section>`;
 }
 render();
+
+// aviso de instalar: some quando já está instalado ou se ela fechar
+const instalado = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+let fechou = false; try { fechou = localStorage.getItem("bestie_aviso_app") === "1"; } catch {}
+if (!instalado && !fechou) $("#instalar").classList.add("on");
+$("#fechar").onclick = () => { $("#instalar").classList.remove("on"); try { localStorage.setItem("bestie_aviso_app","1"); } catch {} };
+// pede ao navegador para não apagar os dados desta página
+try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch {}
 
 document.addEventListener("click", async e => {
   const t = e.target.closest("[data-aba]");
