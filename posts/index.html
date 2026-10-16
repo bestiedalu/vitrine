@@ -99,13 +99,15 @@ footer{text-align:center;font-family:"Bodoni Moda",serif;font-style:italic;color
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== FILA DE POSTAGENS (Claude atualiza aqui) =====
+// ===== FILA DE TAREFAS (Claude atualiza aqui) =====
+// tipo: "post" (post do feed) ou "tarefa" (qualquer outra coisa: destaques, stories, collab...).
+// aba: nome curto que aparece na aba.
 // A ordem deste array é a ordem de POSTAR: o primeiro é o próximo a sair.
 // O número ("post 1", "post 2"...) é calculado sozinho entre os que ainda não foram postados.
 // postado: "AAAA-MM-DD" marca como postado para todo mundo (além da caixinha, que fica salva no celular).
 const POSTS = [
   {
-    id: "viralizados", titulo: "viralizados <i>da lu</i>", status: "postado", postado: "2026-10-15",
+    id: "viralizados", tipo: "post", aba: "viralizados", titulo: "viralizados <i>da lu</i>", status: "postado", postado: "2026-10-15",
     telas: ["viralizados-tela1.png","viralizados-tela2.png","viralizados-tela3.png","viralizados-tela4.png","viralizados-tela5.png","viralizados-tela6.png","viralizados-tela7.png","viralizados-tela8.png"],
     como: [
       "Carrossel com as <b>8 telas</b>, na ordem 1 a 8.",
@@ -130,21 +132,7 @@ preço da Shein muda com cupom, confere na hora 😉
 #pijama #pijamashein #achadinhosshein #achadinhos`
   },
   {
-    id: "collab-reel", titulo: "reel dos viralizados <i>em collab</i>", status: "esperar o impulsionamento acabar",
-    telas: [],
-    intro: "O reel está sendo impulsionado, e o Instagram não deixa editar (nem convidar colaborador) enquanto isso. Quando o impulsionamento terminar, faça os passos abaixo. Enquanto isso, compartilhe o reel nos stories do @bestiedalu e guarde no destaque “pijamas”.",
-    como: [
-      "Confirme que o impulsionamento <b>terminou</b> (Painel profissional → Anúncios).",
-      "No <b>@luisalauraa</b>: abra o reel → 3 pontinhos → <b>Editar</b> → <b>Marcar pessoas → Convidar colaborador</b> → <b>@bestiedalu</b>.",
-      "No <b>@bestiedalu</b>: abra o direct e <b>aceite o convite</b>.",
-      "No @bestiedalu, <b>fixe o reel</b>. Ele vai para o 1º lugar, porque o último fixado aparece primeiro.",
-      "Para o “prazer” voltar ao 1º lugar: <b>desafixe o “prazer” e fixe de novo</b>.",
-      "Não mexa na legenda do reel, para não atrapalhar o “comenta → link” do ManyChat."
-    ],
-    legenda: ""
-  },
-  {
-    id: "prazer", titulo: "prazer, <i>bestie da lu</i>", status: "postado", postado: "2026-10-15",
+    id: "prazer", tipo: "post", aba: "prazer", titulo: "prazer, <i>bestie da lu</i>", status: "postado", postado: "2026-10-15",
     telas: ["prazer-tela1.png","prazer-tela2.png","prazer-tela3.png","prazer-tela4.png"],
     como: [
       "Carrossel com as <b>4 telas</b>, na ordem 1 a 4.",
@@ -163,7 +151,99 @@ aqui eu junto o que vale a pena: o que eu uso e o que passou pelo meu filtro. se
 salva esse post pra lembrar dos selos ✨
 
 #achadinhos #achadinhosshein #achadinhosshopee #comprinhas`
+  },
+  {
+    id: "destaques", tipo: "tarefa", aba: "destaques", titulo: "criar os <i>destaques</i>", status: "pronto pra fazer",
+    telas: ["destaque-comeca-aqui.png","destaque-pijamas.png","destaque-cupons.png"],
+    intro: "Três destaques para começar: começa aqui, pijamas e cupons. As capas estão aqui embaixo. Make e academia ganham destaque quando esses posts saírem.",
+    como: [
+      "Salve as <b>3 capas</b> na galeria.",
+      "<b>começa aqui:</b> compartilhe o post “prazer, bestie da lu” nos stories + 1 story com o link da vitrine.",
+      "<b>pijamas:</b> compartilhe o post “viralizados” e o reel dos viralizados nos stories (pode ser enquanto ele está impulsionado).",
+      "<b>cupons:</b> faça depois de postar o carrossel de cupons. Compartilhe o post nos stories + 1 story com o código <b>Z4NNW</b>.",
+      "No perfil, toque em <b>+ Novo</b> (abaixo da bio), escolha os stories daquele tema e dê o nome.",
+      "Toque em <b>Editar capa</b> → ícone da galeria → escolha a capa certa.",
+      "Ordem dos destaques: <b>começa aqui · pijamas · cupons</b>."
+    ],
+    legenda: ""
+  },
+  {
+    id: "cupons", tipo: "post", aba: "cupons", titulo: "cupons <i>da lu</i>", status: "aguardando aprovação",
+    telas: ["cupons-tela1.png","cupons-tela2.png","cupons-tela3.png","cupons-tela4.png","cupons-tela5.png"],
+    como: [
+      "Carrossel com as <b>5 telas</b>, na ordem 1 a 5.",
+      "Postar no <b>@bestiedalu</b>.",
+      "<b>Não fixar.</b>",
+      "Depois de postar, compartilhe nos stories e guarde no destaque <b>cupons</b>."
+    ],
+    legenda: `cupons da lu 🤍
+tudo que deixa a compra mais barata, num lugar só:
+
+🛍️ minhas escolhas na Shein · código Z4NNW
+✨ 50% off na 1ª compra na Shein (para novas clientes)
+🧡 minha coleção na Shopee
+
+🔗 tudo na vitrine (link na bio)
+cupons e descontos podem mudar ou acabar sem aviso da loja.
+
+#cupomshein #descontoshein #achadinhosshein #achadinhosshopee`
+  },
+  {
+    id: "academia", tipo: "post", aba: "academia", titulo: "looks de <i>academia</i>", status: "aguardando aprovação",
+    telas: ["academia-tela1.png","academia-tela2.png","academia-tela3.png","academia-tela4.png"],
+    como: [
+      "Carrossel com as <b>4 telas</b>, na ordem 1 a 4.",
+      "Postar no <b>@bestiedalu</b>.",
+      "<b>Não fixar.</b>",
+      "Se você já usa o conjunto <b>ombro a ombro</b>, avise antes de postar: ele vira ♡ testado com o seu tamanho."
+    ],
+    legenda: `looks de academia 🤍
+já tenho preto, marrom e agora cinza, veste bem demais!
+
+♡ testado · conjunto de academia cinza · Peguei o P · vi por R$ 125,39
+✦ selecionado · conjunto ombro a ombro · vi por R$ 118,10
+
+✦ = ainda não usei, mas passou no meu filtro
+🔗 tudo na vitrine (link na bio)
+
+#lookacademia #modafitness #achadinhosshein #achadinhos`
+  },
+  {
+    id: "make", tipo: "post", aba: "make", titulo: "make do <i>dia a dia</i>", status: "aguardando aprovação",
+    telas: ["make-tela1.png","make-tela2.png","make-tela3.png","make-tela4.png","make-tela5.png","make-tela6.png"],
+    como: [
+      "Carrossel com as <b>6 telas</b>, na ordem 1 a 6.",
+      "Postar no <b>@bestiedalu</b>.",
+      "<b>Não fixar.</b>",
+      "Se quiser, coloque uma frase sua sobre cada produto na legenda."
+    ],
+    legenda: `make do dia a dia 🤍
+eu amei esses produtos e espero que você ame também!
+
+♡ testado · gel de sobrancelhas · cor transparente · vi por R$ 18,95
+♡ testado · delineador de sobrancelhas · cor 02 marrom · vi por R$ 18,95
+♡ testado · lápis de olho · cor castanho · vi por R$ 15,64
+♡ testado · gloss · cor pink flamingo · vi por R$ 29,40
+
+🔗 tudo na vitrine (link na bio)
+
+#maquiagem #makeshein #achadinhosshein #achadinhos`
+  },
+  {
+    id: "collab-reel", tipo: "tarefa", aba: "collab", titulo: "reel dos viralizados <i>em collab</i>", status: "esperar o impulsionamento acabar",
+    telas: [],
+    intro: "O reel está sendo impulsionado, e o Instagram não deixa editar (nem convidar colaborador) enquanto isso. Quando o impulsionamento terminar, faça os passos abaixo. Enquanto isso, compartilhe o reel nos stories do @bestiedalu e guarde no destaque “pijamas”.",
+    como: [
+      "Confirme que o impulsionamento <b>terminou</b> (Painel profissional → Anúncios).",
+      "No <b>@luisalauraa</b>: abra o reel → 3 pontinhos → <b>Editar</b> → <b>Marcar pessoas → Convidar colaborador</b> → <b>@bestiedalu</b>.",
+      "No <b>@bestiedalu</b>: abra o direct e <b>aceite o convite</b>.",
+      "No @bestiedalu, <b>fixe o reel</b>. Ele vai para o 1º lugar, porque o último fixado aparece primeiro.",
+      "Para o “prazer” voltar ao 1º lugar: <b>desafixe o “prazer” e fixe de novo</b>.",
+      "Não mexa na legenda do reel, para não atrapalhar o “comenta → link” do ManyChat."
+    ],
+    legenda: ""
   }
+
 ];
 // =====================================================
 
@@ -214,43 +294,43 @@ function render(){
   const f = fila(), ok = feitos();
   if (!aba || (aba !== "postados" && !f.find(p => p.id === aba))) aba = f[0] ? f[0].id : "postados";
   $("#tabs").innerHTML =
-    f.map((p,i) => `<button data-aba="${p.id}" class="${aba===p.id?"on":""}">post ${i+1}</button>`).join("") +
-    `<button data-aba="postados" class="feito ${aba==="postados"?"on":""}">postados · ${ok.length}</button>`;
+    f.map((p,i) => `<button data-aba="${p.id}" class="${aba===p.id?"on":""}">${i+1} · ${p.aba||p.id}</button>`).join("") +
+    `<button data-aba="postados" class="feito ${aba==="postados"?"on":""}">feitos · ${ok.length}</button>`;
 
   if (aba === "postados") {
     $("#view").innerHTML = `<section class="post feitos">
-      <div class="top"><span class="num">já postados</span><span class="st ${online?"ok":""}">${online?"vale para todos":"só neste celular"}</span></div>
-      ${ok.length ? ok.map(p => `<div class="item"><div><h3>${p.titulo}</h3><p>POSTADO EM ${fmt(dataDe(p))}</p></div>
+      <div class="top"><span class="num">já feitos</span><span class="st ${online?"ok":""}">${online?"vale para todos":"só neste celular"}</span></div>
+      ${ok.length ? ok.map(p => `<div class="item"><div><h3>${p.titulo}</h3><p>FEITO EM ${fmt(dataDe(p))}</p></div>
         ${p.postado ? "" : `<button data-desfazer="${p.id}">desfazer</button>`}</div>`).join("")
-        : `<div class="vazio"><b>nada ainda</b>quando marcar “já postei” em um post, ele aparece aqui.</div>`}
+        : `<div class="vazio"><b>nada ainda</b>quando marcar “já fiz” em uma tarefa, ela aparece aqui.</div>`}
     </section>`;
     return;
   }
 
   const i = f.findIndex(x => x.id === aba), p = f[i];
   const telas = p.telas.length ? `
-    <div class="sec">telas · ${p.telas.length}</div>
+    <div class="sec">${p.tipo==="post"?"telas":"imagens"} · ${p.telas.length}</div>
     <div class="strip">${p.telas.map((t,k) => `
       <figure><img src="img/${t}" alt="tela ${k+1}" loading="lazy">
       <figcaption><span>tela ${k+1}</span><a href="img/${t}" download="${t}">baixar</a></figcaption></figure>`).join("")}
     </div>
-    <button class="btn" data-save="${p.id}">salvar as ${p.telas.length} telas na galeria</button>
+    <button class="btn" data-save="${p.id}">salvar ${p.telas.length > 1 ? "as " + p.telas.length : "a"} ${p.tipo==="post"?"telas":"imagens"} na galeria</button>
     <p class="hint">no celular abre o menu de compartilhar: toque em “Salvar imagens”.<br>as telas saem em qualidade máxima, sem compressão do WhatsApp.</p>` : "";
   const leg = p.legenda ? `
     <div class="sec">legenda</div>
     <div class="cap">${esc(p.legenda)}</div>
     <button class="btn lt" data-copy="${p.id}">copiar legenda</button>` : "";
-  const aviso = i === 0 ? "" : `<div class="ordem">Este é o <b>post ${i+1}</b>. Poste antes ${i === 1 ? "o <b>post 1</b>" : `os posts <b>1 a ${i}</b>`} e marque “já postei” neles.</div>`;
+  const aviso = i === 0 ? "" : `<div class="ordem">Esta é a tarefa <b>${i+1}</b>. Faça antes ${i === 1 ? "a tarefa <b>1</b>" : `as tarefas <b>1 a ${i}</b>`} e marque “já fiz” ${i === 1 ? "nela" : "nelas"}.</div>`;
 
   $("#view").innerHTML = `${aviso}<section class="post">
-    <div class="top"><span class="num">post ${i+1}${i===0?" · próximo":""}</span><span class="st ${p.status.startsWith("pronto")?"ok":""}">${p.status}</span></div>
+    <div class="top"><span class="num">${p.tipo==="post"?"post":"tarefa"} · ${i+1}${i===0?" · próxima":""}</span><span class="st ${p.status.startsWith("pronto")?"ok":""}">${p.status}</span></div>
     <h2>${p.titulo}</h2>
     ${p.intro ? `<p class="cap">${p.intro}</p>` : ""}
     ${telas}
     ${leg}
-    <div class="sec">como postar</div>
+    <div class="sec">${p.tipo==="post"?"como postar":"como fazer"}</div>
     <ol>${p.como.map(c => `<li>${c}</li>`).join("")}</ol>
-    <label class="check"><input type="checkbox" data-postei="${p.id}"><span>já postei<small>ele vai para “postados” e a fila anda</small></span></label>
+    <label class="check"><input type="checkbox" data-postei="${p.id}"><span>${p.tipo==="post"?"já postei":"já fiz"}<small>vai para “feitos” e a fila anda</small></span></label>
   </section>`;
 }
 render();
@@ -313,7 +393,7 @@ document.addEventListener("change", e => {
   setTimeout(async () => {
     const dia = hoje(); marcados[id] = dia; salvar();
     aba = ""; render(); scrollTo({ top: 0, behavior: "smooth" });
-    toast(await enviar(id, dia) ? "foi para postados ✓" : "marcado só neste celular (sem conexão)");
+    toast(await enviar(id, dia) ? "foi para feitos ✓" : "marcado só neste celular (sem conexão)");
   }, 450);
 });
 </script>
