@@ -43,6 +43,7 @@ h2 i{color:var(--m)}
 .strip{margin-top:12px;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
 .strip figure{flex:none;width:72%;scroll-snap-align:start}
 .strip img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;display:block;border:1px solid var(--n);background:var(--n)}
+.strip video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:14px;display:block;border:1px solid var(--n);background:#000}
 .strip figcaption{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;color:var(--m)}
 .strip figcaption a{color:var(--e);font-weight:500;text-decoration:none;border-bottom:1px solid var(--c)}
 .btn{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:999px;border:0;background:var(--e);color:var(--cl);font:500 16px Jost,sans-serif;letter-spacing:.04em;cursor:pointer}
@@ -236,6 +237,38 @@ eu amei esses produtos e espero que você ame também!
 #maquiagem #makeshein #achadinhosshein #achadinhos`
   },
   {
+    id: "vestido-bordado", tipo: "post", aba: "vestido bordado", titulo: "vestido <i>bordado</i>", status: "pronto pra fazer",
+    telas: ["vestido-bordado-reel.mp4","vestido-bordado-capa.jpg"], rotulos: ["vídeo","capa"],
+    intro: "Reel no <b>@luisalauraa</b> em collab com o <b>@bestiedalu</b>. Postar na <b>terça (20/10) às 18h</b>, o pico das suas seguidoras.",
+    como: [
+      "<b>ManyChat:</b> deixe pronta a automação de comentário com as palavras <b>EU QUERO</b>, <b>eu quero</b> e <b>quero</b>, usando a mensagem abaixo e o link num <b>botão</b> (“ver o vestido”). Se o ManyChat oferecer “próximo post”, escolha essa opção; se não, ative <b>logo depois de postar</b>. O link está no fim desta lista.",
+      "Salve o <b>vídeo</b> e a <b>capa</b> na galeria.",
+      "No <b>@luisalauraa</b>: novo Reel → escolha o vídeo.",
+      "<b>Música:</b> escolha no Instagram. O vídeo começa com 1,5 s só do bordado: deixe a música alta no começo e mais baixa quando você fala.",
+      "<b>Capa:</b> Editar capa → Adicionar da galeria → escolha a capa.",
+      "Marcar pessoas → <b>Convidar colaborador</b> → <b>@bestiedalu</b>. Depois aceite o convite no direct do @bestiedalu.",
+      "Cole a <b>legenda</b> e poste às <b>18h</b>.",
+      "Depois de postar, mande o <b>link do reel</b> para o Rafael: o vestido entra na vitrine.",
+      "Link do botão: <b>https://onelink.shein.com/57/65lzrevnsv7s?ismg_ol=1l1jtXjIqSC_01_KOC-C</b>"
+    ],
+    legenda: `gente, todo bordado 🤎
+se eu fosse mandar fazer, seria uma fortuna. essa compra já foi pensando nas festas de verão.
+
+♡ testado · vestido longo bordado · peguei o P
+
+comenta EU QUERO que eu te envio o link 💌
+
+no Brasil esgotou, então ele vem pelo envio internacional e demora um pouco mais pra chegar.
+
+#vestidobordado #vestidolongo #lookdeverao #achadinhosshein #shein`,
+    manychat: `oii! 🤍 aqui está o vestido bordado:
+♡ testado · peguei o P
+
+no Brasil esgotou, então ele vem pelo envio internacional e demora um pouco mais pra chegar.
+
+tudo que eu indico fica na vitrine: bestiedalu.com.br`
+  },
+  {
     id: "collab-reel", tipo: "tarefa", aba: "collab", titulo: "reel dos viralizados <i>em collab</i>", status: "esperar o impulsionamento acabar",
     telas: [],
     intro: "O reel está sendo impulsionado, e o Instagram não deixa editar (nem convidar colaborador) enquanto isso. Quando o impulsionamento terminar, faça os passos abaixo. Enquanto isso, compartilhe o reel nos stories do @bestiedalu e guarde no destaque “pijamas”.",
@@ -315,17 +348,21 @@ function render(){
 
   const i = f.findIndex(x => x.id === aba), p = f[i];
   const telas = p.telas.length ? `
-    <div class="sec">${p.tipo==="post"?"telas":"imagens"} · ${p.telas.length}</div>
+    <div class="sec">${p.telas.some(t=>/\.mp4$/i.test(t))?"vídeo e capa":(p.tipo==="post"?"telas":"imagens")} · ${p.telas.length}</div>
     <div class="strip">${p.telas.map((t,k) => `
-      <figure><img src="img/${t}" alt="tela ${k+1}" loading="lazy">
-      <figcaption><span>tela ${k+1}</span><a href="img/${t}" download="${t}">baixar</a></figcaption></figure>`).join("")}
+      <figure>${/\.mp4$/i.test(t) ? `<video src="img/${t}" controls playsinline preload="metadata"></video>` : `<img src="img/${t}" alt="tela ${k+1}" loading="lazy">`}
+      <figcaption><span>${(p.rotulos && p.rotulos[k]) || "tela " + (k+1)}</span><a href="img/${t}" download="${t}">baixar</a></figcaption></figure>`).join("")}
     </div>
-    <button class="btn" data-save="${p.id}">salvar ${p.telas.length > 1 ? "as " + p.telas.length : "a"} ${p.tipo==="post"?"telas":"imagens"} na galeria</button>
+    <button class="btn" data-save="${p.id}">salvar ${p.telas.length > 1 ? "as " + p.telas.length : "a"} ${p.telas.some(t=>/\.mp4$/i.test(t))?"arquivos":(p.tipo==="post"?"telas":"imagens")} na galeria</button>
     <p class="hint">no celular abre o menu de compartilhar: toque em “Salvar imagens”.<br>as telas saem em qualidade máxima, sem compressão do WhatsApp.</p>` : "";
   const leg = p.legenda ? `
     <div class="sec">legenda</div>
     <div class="cap">${esc(p.legenda)}</div>
     <button class="btn lt" data-copy="${p.id}">copiar legenda</button>` : "";
+  const mc = p.manychat ? `
+    <div class="sec">mensagem do manychat</div>
+    <div class="cap">${esc(p.manychat)}</div>
+    <button class="btn lt" data-copymc="${p.id}">copiar mensagem</button>` : "";
   const aviso = i === 0 ? "" : `<div class="ordem">Esta é a tarefa <b>${i+1}</b>. Faça antes ${i === 1 ? "a tarefa <b>1</b>" : `as tarefas <b>1 a ${i}</b>`} e marque “já fiz” ${i === 1 ? "nela" : "nelas"}.</div>`;
 
   $("#view").innerHTML = `${aviso}<section class="post">
@@ -334,6 +371,7 @@ function render(){
     ${p.intro ? `<p class="cap">${p.intro}</p>` : ""}
     ${telas}
     ${leg}
+    ${mc}
     <div class="sec">${p.tipo==="post"?"como postar":"como fazer"}</div>
     <ol>${p.como.map(c => `<li>${c}</li>`).join("")}</ol>
     <label class="check"><input type="checkbox" data-postei="${p.id}"><span>${p.tipo==="post"?"já postei":"já fiz"}<small>vai para “feitos” e a fila anda</small></span></label>
@@ -370,6 +408,14 @@ document.addEventListener("click", async e => {
     return;
   }
 
+  const m = e.target.closest("[data-copymc]");
+  if (m) {
+    const p = POSTS.find(x => x.id === m.dataset.copymc);
+    try { await navigator.clipboard.writeText(p.manychat); toast("mensagem copiada 🤍"); }
+    catch { const r = document.createRange(); r.selectNodeContents(m.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("mensagem selecionada: toque em copiar"); }
+    return;
+  }
+
   const b = e.target.closest("[data-save]");
   if (b) {
     const p = POSTS.find(x => x.id === b.dataset.save);
@@ -377,7 +423,7 @@ document.addEventListener("click", async e => {
     try {
       const files = await Promise.all(p.telas.map(async t => {
         const r = await fetch("img/" + t); const bl = await r.blob();
-        return new File([bl], t, { type: bl.type || "image/png" });
+        return new File([bl], t, { type: bl.type || (/\.mp4$/i.test(t) ? "video/mp4" : "image/png") });
       }));
       if (navigator.canShare && navigator.canShare({ files })) {
         await navigator.share({ files });
